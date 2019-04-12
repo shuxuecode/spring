@@ -1,0 +1,7 @@
+/.idea/
+/.settings/
+/target/
+
+.classpath
+.project
+spring-mvc-demo.iml
