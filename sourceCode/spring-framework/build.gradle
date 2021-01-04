@@ -1,6 +1,7 @@
 buildscript {
 	repositories {
 		gradlePluginPortal()
+		maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
 		maven { url "https://repo.spring.io/plugins-release" }
 	}
 	dependencies {
@@ -59,7 +60,7 @@ configure(allprojects) { project ->
 	version = qualifyVersionIfNecessary(version)
 
 	apply plugin: "java"
-	apply plugin: "kotlin"
+//	apply plugin: "kotlin"
 	apply plugin: "checkstyle"
 	apply plugin: "propdeps"
 	apply plugin: "test-source-set-dependencies"
@@ -114,21 +115,21 @@ configure(allprojects) { project ->
 		options.compilerArgs += "-parameters"
 	}
 
-	compileKotlin {
-		kotlinOptions {
-			jvmTarget = "1.8"
-			freeCompilerArgs = ["-Xjsr305=strict"]
-			apiVersion = "1.1"
-			languageVersion = "1.1"
-		}
-	}
+//	compileKotlin {
+//		kotlinOptions {
+//			jvmTarget = "1.8"
+//			freeCompilerArgs = ["-Xjsr305=strict"]
+//			apiVersion = "1.1"
+//			languageVersion = "1.1"
+//		}
+//	}
 
-	compileTestKotlin {
-		kotlinOptions {
-			jvmTarget = "1.8"
-			freeCompilerArgs = ["-Xjsr305=strict"]
-		}
-	}
+//	compileTestKotlin {
+//		kotlinOptions {
+//			jvmTarget = "1.8"
+//			freeCompilerArgs = ["-Xjsr305=strict"]
+//		}
+//	}
 
 	test {
 		systemProperty("java.awt.headless", "true")
