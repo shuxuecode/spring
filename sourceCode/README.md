@@ -18,3 +18,12 @@ distributionUrl=file:///D:/gradle/gradle-5.6.4-bin.zip
 repositories
 添加
 maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
+
+
+执行
+gradlew.bat
+
+如果编译失败则根据提示修改，直到编译成功。
+
+
+
