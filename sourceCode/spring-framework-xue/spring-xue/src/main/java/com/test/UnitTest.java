@@ -17,6 +17,8 @@ public class UnitTest {
 
 		DemoService demoService = ac.getBean(DemoService.class);
 		System.out.println(demoService);
+		DemoService demoService2 = ac.getBean(DemoService.class);
+		System.out.println(demoService2);
 	}
 
 }
