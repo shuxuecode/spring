@@ -871,6 +871,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		List<String> beanNames = new ArrayList<>(this.beanDefinitionNames);
 
 		// Trigger initialization of all non-lazy singleton beans...
+		// todo mark
+		// 遍历所有的BeanDefinition
 		for (String beanName : beanNames) {
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
@@ -894,6 +896,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					}
 				}
 				else {
+					// todo mark
+					// 开始实例bean
 					getBean(beanName);
 				}
 			}
