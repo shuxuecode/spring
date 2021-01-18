@@ -1,5 +1,6 @@
-package com.zsx;
+package com.test;
 
+import com.AppConfig;
 import com.zsx.service.DemoService;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
