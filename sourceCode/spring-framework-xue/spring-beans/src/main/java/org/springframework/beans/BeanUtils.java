@@ -136,6 +136,7 @@ public abstract class BeanUtils {
 			throw new BeanInstantiationException(clazz, "Specified class is an interface");
 		}
 		try {
+			// todo mark
 			return instantiateClass(clazz.getDeclaredConstructor());
 		}
 		catch (NoSuchMethodException ex) {
