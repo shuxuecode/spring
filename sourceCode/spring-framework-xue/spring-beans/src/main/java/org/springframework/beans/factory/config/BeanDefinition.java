@@ -46,6 +46,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * @see #setScope
 	 * @see ConfigurableBeanFactory#SCOPE_SINGLETON
 	 */
+	// todo mark 单例
 	String SCOPE_SINGLETON = ConfigurableBeanFactory.SCOPE_SINGLETON;
 
 	/**
@@ -54,6 +55,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * @see #setScope
 	 * @see ConfigurableBeanFactory#SCOPE_PROTOTYPE
 	 */
+	// todo mark 非单例
 	String SCOPE_PROTOTYPE = ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 
@@ -146,6 +148,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * Return whether this bean should be lazily initialized, i.e. not
 	 * eagerly instantiated on startup. Only applicable to a singleton bean.
 	 */
+	// todo mark 默认情况下，容器启动时会初始化bean。如果设置了true，容器启动时不会初始化，首次getBean时才初始化
 	boolean isLazyInit();
 
 	/**
@@ -158,6 +161,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * Return the bean names that this bean depends on.
 	 */
 	@Nullable
+	// todo mark 在本bean初始化之前，需要先初始化的bean
 	String[] getDependsOn();
 
 	/**
@@ -172,6 +176,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	/**
 	 * Return whether this bean is a candidate for getting autowired into some other bean.
 	 */
+	// todo mark 是否够资格作为自动注入的候选bean。。。如果这里返回false，那就连自动注入的资格都没得
 	boolean isAutowireCandidate();
 
 	/**
@@ -184,6 +189,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	/**
 	 * Return whether this bean is a primary autowire candidate.
 	 */
+	// todo mark 当作为依赖，要注入给某个bean时，当有多个候选bean时，本bean是否为头号选手
 	boolean isPrimary();
 
 	/**
@@ -220,6 +226,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * <p>The returned instance can be modified during bean factory post-processing.
 	 * @return the ConstructorArgumentValues object (never {@code null})
 	 */
+	// todo mark 通过xml <bean>方式定义bean时，通过<constructor-arg>来定义构造器的参数，这里即：获取构造器参数
 	ConstructorArgumentValues getConstructorArgumentValues();
 
 	/**
@@ -235,6 +242,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * <p>The returned instance can be modified during bean factory post-processing.
 	 * @return the MutablePropertyValues object (never {@code null})
 	 */
+	// todo mark 通过xml <bean>方式定义bean时，通过 <property name="testService" ref="testService"/> 这种方式来注入依赖，这里即：获取property注入的参数值
 	MutablePropertyValues getPropertyValues();
 
 	/**
@@ -290,6 +298,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * @see #ROLE_SUPPORT
 	 * @see #ROLE_INFRASTRUCTURE
 	 */
+	// todo mark 获取角色 ？？？
 	int getRole();
 
 	/**
@@ -302,6 +311,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * Return a human-readable description of this bean definition.
 	 */
 	@Nullable
+	// todo mark 获取描述
 	String getDescription();
 
 
@@ -323,6 +333,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * returned on all calls.
 	 * @see #SCOPE_SINGLETON
 	 */
+	// todo mark 是否单例
 	boolean isSingleton();
 
 	/**
@@ -331,11 +342,13 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * @since 3.0
 	 * @see #SCOPE_PROTOTYPE
 	 */
+	// todo mark 是否Prototype
 	boolean isPrototype();
 
 	/**
 	 * Return whether this bean is "abstract", that is, not meant to be instantiated.
 	 */
+	// todo mark 是否为抽象的，还记得<bean>方式定义的时候，可以这样指定吗？<bean id="testByPropertyController" class="org.springframework.simple.TestByPropertyController" abstract="true">
 	boolean isAbstract();
 
 	/**
