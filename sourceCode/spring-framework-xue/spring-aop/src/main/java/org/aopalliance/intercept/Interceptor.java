@@ -20,6 +20,7 @@ import org.aopalliance.aop.Advice;
 
 /**
  * This interface represents a generic interceptor.
+ * 一般拦截器的代表
  *
  * <p>A generic interceptor can intercept runtime events that occur
  * within a base program. Those events are materialized by (reified

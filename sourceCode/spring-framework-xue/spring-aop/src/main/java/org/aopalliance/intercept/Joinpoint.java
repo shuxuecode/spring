@@ -22,6 +22,8 @@ import java.lang.reflect.AccessibleObject;
  * This interface represents a generic runtime joinpoint (in the AOP
  * terminology).
  *
+ * 注入点  todo mark
+ *
  * <p>A runtime joinpoint is an <i>event</i> that occurs on a static
  * joinpoint (i.e. a location in a the program). For instance, an
  * invocation is the runtime joinpoint on a method (static joinpoint).

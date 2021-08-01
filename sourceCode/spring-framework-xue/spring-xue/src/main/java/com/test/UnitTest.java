@@ -15,7 +15,6 @@ public class UnitTest {
 		ac.register(AppConfig.class);
 		ac.refresh();
 
-
 		// todo mark
 
 		DemoService demoService = ac.getBean(DemoService.class);
