@@ -781,6 +781,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Initialize the MessageSource.
 	 * Use parent's if none defined in this context.
 	 */
+	// todo mark 初始化消息资源
 	protected void initMessageSource() {
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 		if (beanFactory.containsLocalBean(MESSAGE_SOURCE_BEAN_NAME)) {
@@ -815,6 +816,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 *
 	 * @see org.springframework.context.event.SimpleApplicationEventMulticaster
 	 */
+	// todo mark 初始化容器事件广播（multicaster多播器）
 	protected void initApplicationEventMulticaster() {
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 		if (beanFactory.containsLocalBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME)) {
