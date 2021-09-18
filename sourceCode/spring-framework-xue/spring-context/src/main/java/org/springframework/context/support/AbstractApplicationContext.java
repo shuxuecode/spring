@@ -555,25 +555,33 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.applicationListeners;
 	}
 
+	/**
+	 * mark todo
+	 *
+	 */
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
-			// Prepare this context for refreshing.
+			// Prepare this context for refreshing. 准备刷新上下文环境
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
+			// todo mark 告诉子类初始化bean工厂
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			// todo mark 对bean工厂填充属性
 			prepareBeanFactory(beanFactory);
 
 			try {
 				// Allows post-processing of the bean factory in context subclasses.
+				// todo mark 留个子类去实现该接口，
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
 				// todo mark start
 				// 解析
+				// 调用bean工厂后置处理器，在此将class扫描成beanDefinition
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				System.out.println(beanFactory.getBeanDefinitionCount()); // todo mark
@@ -587,18 +595,24 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// todo mark end
 
 				// Register bean processors that intercept bean creation.
+				// 注册bean的后置处理器
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
+				// 初始化国际化资源处理器
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
+				// 创建事件多播器
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
+				// 留给子类实现，
+				// springboot就是从这里启动的tomcat
 				onRefresh();
 
 				// Check for listener beans and register them.
+				// 把事件监听器注册到多播器上
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
@@ -607,6 +621,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
+				// 最后一步：发布刷新事件 （springCloud就是从这里启动的）
 				finishRefresh();
 			} catch (BeansException ex) {
 				if (logger.isWarnEnabled()) {
