@@ -557,31 +557,33 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	/**
 	 * mark todo
-	 *
+	 * 刷新上下文
 	 */
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
-			// Prepare this context for refreshing. 准备刷新上下文环境
+			// Prepare this context for refreshing.
+			// todo mark 1、准备刷新上下文环境
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
 			// todo mark 告诉子类初始化bean工厂
+			// todo mark 2、获取刷新后的内部Bean工厂
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
-			// todo mark 对bean工厂填充属性
+			// todo mark 3、 对bean工厂填充属性
 			prepareBeanFactory(beanFactory);
 
 			try {
 				// Allows post-processing of the bean factory in context subclasses.
-				// todo mark 留个子类去实现该接口，
+				// todo mark 4、 留个子类去实现该接口，
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
 				// todo mark start
 				// 解析
-				// 调用bean工厂后置处理器，在此将class扫描成beanDefinition
+				// 5、 调用bean工厂后置处理器，在此将class扫描成beanDefinition
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				System.out.println(beanFactory.getBeanDefinitionCount()); // todo mark
@@ -595,33 +597,36 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// todo mark end
 
 				// Register bean processors that intercept bean creation.
-				// 注册bean的后置处理器
+				// 6、 注册bean的后置处理器
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
-				// 初始化国际化资源处理器
+				// 7、初始化国际化资源处理器
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
-				// 创建事件多播器
+				// 8、创建事件多播器
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
 				// 留给子类实现，
 				// springboot就是从这里启动的tomcat
+				// todo mark 9.空方法，可以用于子类实现在容器刷新时自定义逻辑
 				onRefresh();
 
 				// Check for listener beans and register them.
+				// todo mark 10. 注册时间监听器，将所有项目里面的ApplicationListener注册到容器中来
 				// 把事件监听器注册到多播器上
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
-				// todo mark
+				// todo mark 11. 初始化所有剩下的单实例bean,单例bean在初始化容器时创建，原型bean在获取时（getbean）时创建
 				// 实例化
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
 				// 最后一步：发布刷新事件 （springCloud就是从这里启动的）
+				// todo mark 12. 完成BeanFactory的初始化创建工作，IOC容器就创建完成；
 				finishRefresh();
 			} catch (BeansException ex) {
 				if (logger.isWarnEnabled()) {
@@ -646,11 +651,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * todo mark 刷新上下文前的预处理
 	 * Prepare this context for refreshing, setting its startup date and
 	 * active flag as well as performing any initialization of property sources.
 	 */
 	protected void prepareRefresh() {
 		// Switch to active.
+		// 设置容器启动时间
 		this.startupDate = System.currentTimeMillis();
 		this.closed.set(false);
 		this.active.set(true);
@@ -664,10 +671,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Initialize any placeholder property sources in the context environment.
+		// todo mark 空方法，用于子容器自定义个性化的属性设置方法
 		initPropertySources();
 
 		// Validate that all properties marked as required are resolvable:
 		// see ConfigurablePropertyResolver#setRequiredProperties
+		// todo mark 检验属性的合法等
 		getEnvironment().validateRequiredProperties();
 
 		// Store pre-refresh ApplicationListeners...
@@ -697,6 +706,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/**
 	 * Tell the subclass to refresh the internal bean factory.
 	 *
+	 * todo mark 获取刷新后的内部Bean工厂，obtainFreshBeanFactory方法为内部bean工厂重新生成id，并返回bean工厂
+	 *
 	 * @return the fresh BeanFactory instance
 	 * @see #refreshBeanFactory()
 	 * @see #getBeanFactory()
@@ -707,6 +718,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * todo mark BeanFactory的预准备工作 prepareBeanFactory(beanFactory):
 	 * Configure the factory's standard context characteristics,
 	 * such as the context's ClassLoader and post-processors.
 	 *
@@ -714,12 +726,16 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
 		// Tell the internal bean factory to use the context's class loader etc.
+		// todo mark 设置类加载器
 		beanFactory.setBeanClassLoader(getClassLoader());
+		// todo mark bean表达式解析器
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
 		// Configure the bean factory with context callbacks.
+		// todo mark 添加一个BeanPostProcessor实现ApplicationContextAwareProcessor
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
+		// todo mark 设置忽略的自动装配接口，表示这些接口的实现类不允许通过接口自动注入
 		beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 		beanFactory.ignoreDependencyInterface(EmbeddedValueResolverAware.class);
 		beanFactory.ignoreDependencyInterface(ResourceLoaderAware.class);
@@ -729,6 +745,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 		// BeanFactory interface not registered as resolvable type in a plain factory.
 		// MessageSource registered (and found for autowiring) as a bean.
+		// todo mark 注册可以自动装配的组件，就是可以在任何组件中允许自动注入的组件
 		beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
 		beanFactory.registerResolvableDependency(ResourceLoader.class, this);
 		beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
@@ -745,6 +762,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Register default environment beans.
+		// todo mark 给beanfactory容器中注册组件ConfigurableEnvironment、systemProperties、systemEnvironment
 		if (!beanFactory.containsLocalBean(ENVIRONMENT_BEAN_NAME)) {
 			beanFactory.registerSingleton(ENVIRONMENT_BEAN_NAME, getEnvironment());
 		}
@@ -771,6 +789,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Instantiate and invoke all registered BeanFactoryPostProcessor beans,
 	 * respecting explicit order if given.
 	 * <p>Must be called before singleton instantiation.
+	 *
+	 * todo mark
+	 * 执行bean工厂的后置处理器 invokeBeanFactoryPostProcessors（beanFactory）
+	 *  IOC容器初始化过程中有三个重要的步骤，
+	 *  1：资源定位，
+	 *  2：bean定义的载入，
+	 *  3：将bean名称、bean定义以key-value形式注册到容器，
+	 *  这三个步骤都将在此完成。
 	 */
 	protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
 		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory, getBeanFactoryPostProcessors());
@@ -784,9 +810,30 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 注册BeanPostProcessor（Bean的后置处理器）,用于拦截bean创建过程
+	 *
 	 * Instantiate and register all BeanPostProcessor beans,
 	 * respecting explicit order if given.
 	 * <p>Must be called before any instantiation of application beans.
+	 *
+	 * 注册后置处理器的大致逻辑是：
+	 *
+	 * 1.获取所有的 BeanPostProcessor
+	 *
+	 * 2.根据处理器实现的接口区分出4中类型：
+	 *
+	 * 　　a.实现PriorityOrdered接口的处理器
+	 *
+	 * 　　b.实现Ordered接口的处理器，
+	 *
+	 * 　　c.实现MergedBeanDefinitionPostProcessor接口的处理器，
+	 *
+	 * 　　d.普通后置处理器
+	 *
+	 * 3.按这个4中类型依次注册到容器中
+	 *
+	 * 4.注册一个特殊的后置处理器ApplicationListenerDetector，ApplicationListenerDetector本身也实现了MergedBeanDefinitionPostProcessor接口，
+	 * 有个问题，这个为什么没有在上面c,d之间注册，而是放到最后？
 	 */
 	protected void registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) {
 		PostProcessorRegistrationDelegate.registerBeanPostProcessors(beanFactory, this);
@@ -797,8 +844,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Use parent's if none defined in this context.
 	 */
 	// todo mark 初始化消息资源
+	// 初始化MessageSource组件（做国际化功能；消息绑定，消息解析）
 	protected void initMessageSource() {
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
+		// todo mark 判断是否已经存在id为MESSAGE_SOURCE_BEAN_NAME的组件
 		if (beanFactory.containsLocalBean(MESSAGE_SOURCE_BEAN_NAME)) {
 			this.messageSource = beanFactory.getBean(MESSAGE_SOURCE_BEAN_NAME, MessageSource.class);
 			// Make MessageSource aware of parent MessageSource.
@@ -960,12 +1009,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		clearResourceCaches();
 
 		// Initialize lifecycle processor for this context.
+		// todo mark 初始化和生命周期有关的后置处理器LifecycleProcessor，默认DefaultLifecycleProcessor
 		initLifecycleProcessor();
 
 		// Propagate refresh to lifecycle processor first.
+		// todo mark 回调生命周期处理器
 		getLifecycleProcessor().onRefresh();
 
 		// Publish the final event.
+		// todo mark 发布容器刷新完成事件：ContextRefreshedEvent
 		publishEvent(new ContextRefreshedEvent(this));
 
 		// Participate in LiveBeansView MBean, if active.

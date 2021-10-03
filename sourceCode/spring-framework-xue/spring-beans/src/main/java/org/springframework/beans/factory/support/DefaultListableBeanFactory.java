@@ -874,9 +874,12 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		// todo mark
 		// 遍历所有的BeanDefinition
 		for (String beanName : beanNames) {
+			// todo mark 获取Bean的定义信息；RootBeanDefinition
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+			// todo mark 非抽象，单例，非延迟加载
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
 				if (isFactoryBean(beanName)) {
+					// todo mark 是否是FactoryBean
 					Object bean = getBean(FACTORY_BEAN_PREFIX + beanName);
 					if (bean instanceof FactoryBean) {
 						FactoryBean<?> factory = (FactoryBean<?>) bean;
@@ -896,7 +899,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					}
 				}
 				else {
-					// todo mark
+					// todo mark 不是FactoryBean,则利用getBean(beanName)实例化bean
 					// 开始实例bean
 					getBean(beanName);
 				}

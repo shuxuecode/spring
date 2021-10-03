@@ -200,6 +200,7 @@ final class PostProcessorRegistrationDelegate {
 
 		// Separate between BeanPostProcessors that implement PriorityOrdered,
 		// Ordered, and the rest.
+		// todo mark 按优先级分类
 		List<BeanPostProcessor> priorityOrderedPostProcessors = new ArrayList<>();
 		List<BeanPostProcessor> internalPostProcessors = new ArrayList<>();
 		List<String> orderedPostProcessorNames = new ArrayList<>();
@@ -221,10 +222,12 @@ final class PostProcessorRegistrationDelegate {
 		}
 
 		// First, register the BeanPostProcessors that implement PriorityOrdered.
+		// todo mark 先注册实现PriorityOrdered接口的处理器，添加到beanfactory容器中beanFactory.addBeanPostProcessor(postProcessor);
 		sortPostProcessors(priorityOrderedPostProcessors, beanFactory);
 		registerBeanPostProcessors(beanFactory, priorityOrderedPostProcessors);
 
 		// Next, register the BeanPostProcessors that implement Ordered.
+		// todo mark 注册实现Ordered接口的处理器
 		List<BeanPostProcessor> orderedPostProcessors = new ArrayList<>(orderedPostProcessorNames.size());
 		for (String ppName : orderedPostProcessorNames) {
 			BeanPostProcessor pp = beanFactory.getBean(ppName, BeanPostProcessor.class);
@@ -237,6 +240,7 @@ final class PostProcessorRegistrationDelegate {
 		registerBeanPostProcessors(beanFactory, orderedPostProcessors);
 
 		// Now, register all regular BeanPostProcessors.
+		// todo mark 注册没有实现Ordered或PriorityOrdered的处理器（nonOrderedPostProcessors）
 		List<BeanPostProcessor> nonOrderedPostProcessors = new ArrayList<>(nonOrderedPostProcessorNames.size());
 		for (String ppName : nonOrderedPostProcessorNames) {
 			BeanPostProcessor pp = beanFactory.getBean(ppName, BeanPostProcessor.class);
@@ -248,11 +252,13 @@ final class PostProcessorRegistrationDelegate {
 		registerBeanPostProcessors(beanFactory, nonOrderedPostProcessors);
 
 		// Finally, re-register all internal BeanPostProcessors.
+		// todo mark 最后，重新注册所有internal BeanPostProcessors（实现MergedBeanDefinitionPostProcessor接口的后置处理器
 		sortPostProcessors(internalPostProcessors, beanFactory);
 		registerBeanPostProcessors(beanFactory, internalPostProcessors);
 
 		// Re-register post-processor for detecting inner beans as ApplicationListeners,
 		// moving it to the end of the processor chain (for picking up proxies etc).
+		// todo mark 注册ApplicationListenerDetector，用于Bean创建完时检查是否是ApplicationListener
 		beanFactory.addBeanPostProcessor(new ApplicationListenerDetector(applicationContext));
 	}
 

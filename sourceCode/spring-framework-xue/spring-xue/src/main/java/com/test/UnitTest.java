@@ -12,7 +12,9 @@ public class UnitTest {
 
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext();
+		// 注册bean配置类
 		ac.register(AppConfig.class);
+		// 刷新上下文
 		ac.refresh();
 
 		// todo mark
@@ -25,5 +27,7 @@ public class UnitTest {
 //		System.out.println(ac.getBean(String.class));
 		System.out.println(ac.getBean(TestService.class));
 	}
+
+
 
 }

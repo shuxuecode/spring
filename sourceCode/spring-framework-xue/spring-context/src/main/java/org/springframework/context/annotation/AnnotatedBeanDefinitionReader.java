@@ -245,28 +245,42 @@ public class AnnotatedBeanDefinitionReader {
 	 * @param customizers one or more callbacks for customizing the factory's
 	 * {@link BeanDefinition}, e.g. setting a lazy-init or primary flag
 	 * @since 5.0
+	 *
+	 * todo mark
+	 * register方法重点完成了bean配置类本身的解析和注册，处理过程可以分为以下几个步骤：
+	 * 1、根据bean配置类，使用BeanDefinition解析Bean的定义信息，主要是一些注解信息
+	 * 2、Bean作用域的处理，默认缺少@Scope注解，解析成单例
+	 * 3、借助AnnotationConfigUtils工具类解析通用注解
+	 * 4、将bean定义信息已beanname，beandifine键值对的形式注册到ioc容器中
 	 */
 	private <T> void doRegisterBean(Class<T> beanClass, @Nullable String name,
 			@Nullable Class<? extends Annotation>[] qualifiers, @Nullable Supplier<T> supplier,
 			@Nullable BeanDefinitionCustomizer[] customizers) {
 
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
+		// todo 2021/10/3 mark @Conditional装配条件判断是否需要跳过注册
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}
 
+		// todo mark 设置回调
 		abd.setInstanceSupplier(supplier);
+		// todo mark 解析bean作用域(单例或者原型)，如果有@Scope注解，则解析@Scope，没有则默认为singleton
 		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
+		// todo mark 作用域写回BeanDefinition数据结构, abd中缺损的情况下为空，将默认值singleton重新赋值到abd
 		abd.setScope(scopeMetadata.getScopeName());
+		// todo mark 生成bean配置类beanName
 		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
-
+		// todo mark 通用注解解析到abd结构中，主要是处理Lazy, primary DependsOn, Role ,Description这五个注解
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
 				if (Primary.class == qualifier) {
+					// todo mark 如果配置@Primary注解，则设置当前Bean为自动装配autowire时首选bean
 					abd.setPrimary(true);
 				}
 				else if (Lazy.class == qualifier) {
+					// todo mark 延迟加载
 					abd.setLazyInit(true);
 				}
 				else {
@@ -274,14 +288,19 @@ public class AnnotatedBeanDefinitionReader {
 				}
 			}
 		}
+
+		// todo mark 自定义bean注册，通常用在applicationContext创建后，手动向容器中一lambda表达式的方式注册bean,
+		// todo mark 比如：applicationContext.registerBean(UserService.class, () -> new UserService());
 		if (customizers != null) {
 			for (BeanDefinitionCustomizer customizer : customizers) {
 				customizer.customize(abd);
 			}
 		}
-
+		// todo mark 根据beanName和bean定义信息封装一个beanhold,heanhold其实就是一个 beanname和BeanDefinition的映射
 		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
 		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+		// todo mark BeanDefinitionReaderUtils.registerBeanDefinition 内部通过DefaultListableBeanFactory.registerBeanDefinition(String beanName, BeanDefinition beanDefinition)按名称将bean定义信息注册到容器中，
+		// todo mark 实际上DefaultListableBeanFactory内部维护一个Map<String, BeanDefinition>类型变量beanDefinitionMap，用于保存注bean定义信息（beanname 和 beandefine映射）
 		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 	}
 

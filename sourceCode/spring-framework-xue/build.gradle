@@ -281,7 +281,8 @@ configure(allprojects) { project ->
 			maven { url "https://maven.aliyun.com/nexus/content/groups/public/"}
 //			maven { url "https://maven.aliyun.com/nexus/content/repositories/jcenter/"}
 //			mavenCentral()
-//			maven { url "https://repo.spring.io/libs-spring-framework-build" }
+			/* 下面的仓库解决了  Could not find com.ibm.websphere:uow:6.0.2.17. */
+			maven { url "https://repo.spring.io/libs-spring-framework-build" }
 		}
 	}
 	configurations.all {

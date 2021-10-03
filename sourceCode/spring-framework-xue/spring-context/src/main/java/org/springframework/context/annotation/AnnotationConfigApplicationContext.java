@@ -63,7 +63,9 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
+		// todo mark 在IOC容器中初始化一个 注解bean读取器AnnotatedBeanDefinitionReader
 		this.reader = new AnnotatedBeanDefinitionReader(this);
+		// todo mark 在IOC容器中初始化一个 按类路径扫描注解bean的 扫描器
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
