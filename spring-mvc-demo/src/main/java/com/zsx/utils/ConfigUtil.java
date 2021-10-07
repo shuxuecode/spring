@@ -1,10 +1,5 @@
 package com.zsx.utils;
-/**
- * ConfigUtil.java
- *
- * @author Yanjie Gao
- * @date 2017/3/31 16:55
- */
+
 public class ConfigUtil {
 
 	private ConfigUtil(){

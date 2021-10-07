@@ -24,7 +24,7 @@ public class ZsxAspect {
 
     @Before(EDP)
     public void logBefore(JoinPoint joinPoint){
-        System.out.println("按实际电缆附件阿斯蒂芬");
+        System.out.println("=============");
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         logger.debug(className + "的" + methodName + "执行了");

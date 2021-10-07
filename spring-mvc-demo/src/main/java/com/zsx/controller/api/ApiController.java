@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created by QDHL on 2017/6/22.
- */
+
 @Controller
 @Api(value="用户controller",description="用户相关操作")
 public class ApiController {

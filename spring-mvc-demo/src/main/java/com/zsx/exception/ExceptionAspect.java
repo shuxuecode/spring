@@ -70,8 +70,6 @@ public class ExceptionAspect {
 //                    + lineBreak + time + lineBreak + "<br></br>参数:" + lineBreak + sb1 + "<br></br>异常:"
 //                    + e.toString() + "<br></br>" + sb2);
 
-            System.out.println("赵树学赵树学赵树学赵树学赵树学赵树学赵树学赵树学赵树学赵树学赵树学赵树学");
-
             throw e;
         }
     }

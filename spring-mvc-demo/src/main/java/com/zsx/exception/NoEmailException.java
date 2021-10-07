@@ -1,10 +1,5 @@
 package com.zsx.exception;
 
-/**
- * @author qiaojf
- * @date 2016/5/19
- * @desc
- */
 public class NoEmailException extends RuntimeException {
     public NoEmailException() {
         super();

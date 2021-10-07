@@ -2,9 +2,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.*;
 
-/**
- * Created by QDHL on 2017/9/11.
- */
+
 public class WordTest {
 
     public static void getFiles() throws IOException {
