@@ -28,8 +28,6 @@ public class WordTest {
     public static void main(String[] args) throws IOException {
 
         getFiles();
-//        String s = readFileByLines("D:\\git\\zhaoshuxue\\spring\\spring-mvc-demo\\src\\test\\java\\UnitTest.java");
-
 
 
 
