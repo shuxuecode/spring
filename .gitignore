@@ -4,5 +4,6 @@ target/
 .settings/
 .classpath
 .project
+.DS_Store
 
 !sourceCode/spring-framework-1.0/src/org/springframework/aop/target/
