@@ -4,3 +4,5 @@ target/
 .settings/
 .classpath
 .project
+
+!sourceCode/spring-framework-1.0/src/org/springframework/aop/target/

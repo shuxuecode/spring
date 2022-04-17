@@ -35,6 +35,7 @@ import org.springframework.beans.MutablePropertyValues;
  * @see org.springframework.beans.factory.support.RootBeanDefinition
  * @see org.springframework.beans.factory.support.ChildBeanDefinition
  */
+// todo mark
 public interface BeanDefinition {
 
 	/**
