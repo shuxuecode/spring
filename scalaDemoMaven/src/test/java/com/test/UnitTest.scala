@@ -13,6 +13,14 @@ object UnitTest {
     val num = FunctionTest.fun(10)
 
     println(num)
+
+    var res: String = if (1 < 2) {
+      "小于"
+    } else {
+      "大于"
+    }
+
+    println(res)
   }
 
 }
