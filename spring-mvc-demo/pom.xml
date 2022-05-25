@@ -12,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.7</jdk.version>
 		<!-- spring版本号 -->
-		<spring.version>4.3.18.RELEASE</spring.version>
+		<spring.version>5.2.22.RELEASE</spring.version>
 		<apache.poi.version>3.14</apache.poi.version>
 	</properties>
 
