@@ -33,6 +33,7 @@ import java.util.List;
  *
  * @see org.apache.dubbo.rpc.cluster.Cluster#join(Directory)
  */
+// todo mark 负载均衡
 @SPI(RandomLoadBalance.NAME)
 public interface LoadBalance {
 
