@@ -81,6 +81,7 @@ import org.springframework.core.io.support.SpringFactoriesLoader;
 @Inherited
 @AutoConfigurationPackage
 @Import(AutoConfigurationImportSelector.class)
+// todo mark
 public @interface EnableAutoConfiguration {
 
 	/**
