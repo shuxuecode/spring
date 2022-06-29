@@ -13,7 +13,7 @@
 		<jdk.version>1.7</jdk.version>
 		<!-- spring版本号 -->
 		<spring.version>4.3.18.RELEASE</spring.version>
-		<apache.poi.version>3.14</apache.poi.version>
+		<apache.poi.version>4.1.1</apache.poi.version>
 	</properties>
 
 	<dependencies>
