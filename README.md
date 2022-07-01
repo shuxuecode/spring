@@ -10,3 +10,6 @@
 mvn archetype:generate -DgroupId=com.zsx -DartifactId=spring-mvc-batch -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeCatalog=internal
 
 ```
+
+
+
