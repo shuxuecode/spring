@@ -126,8 +126,8 @@ public class SimpleMailSender {
         mailInfo.setPassword(ConfigUtil.getAttribute("mail_pass"));//您的邮箱密码
         mailInfo.setFromAddress(ConfigUtil.getAttribute("mail_user"));
         mailInfo.setToAddress(ConfigUtil.getAttribute("to_address"));
-        mailInfo.setSubject("设置邮箱标题 如http://www.guihua.org 中国桂花网");
-        mailInfo.setContent("设置邮箱内容 如http://www.guihua.org 中国桂花网 是中国最大桂花网站==");
+        mailInfo.setSubject("设置邮箱标题");
+        mailInfo.setContent("设置邮箱内容");
         //这个类主要来发送邮件
         SimpleMailSender sms = new SimpleMailSender();
         sms.sendTextMail(mailInfo);//发送文体格式
